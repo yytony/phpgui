@@ -1,5 +1,5 @@
     
-    This a html widgets wrapper library writing in php , for making more "pure" in dynamic web pages development . I like cleaning 
+This a html widgets wrapper library writing in php , for making more "pure" in dynamic web pages development . I like cleaning 
 declarement like XAML, but that html declarement  is too dirty and redundant. I think PHP code itself is exactly a good declarement  and
 can do what jQuery has done. It's in developing heavily....
 
@@ -70,5 +70,4 @@ this is the generated html:
 </div>
 </body>
 </html>
--------------------------------------
 
