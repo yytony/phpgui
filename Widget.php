@@ -199,7 +199,7 @@ class FireAction {
 class Widget {
 	public $id=null;
 	public $class = null;
-	public $type = null;
+	public $widgetType = null;
 	
 	public $color = '#d0d0d0';
 	public $width = 0;
@@ -225,7 +225,7 @@ class Widget {
 		if($this->font === null)    		$this->font = new Font();
 		if($this->fireAction === null)		$this->fireAction = new FireAction();
 		
-		$this->type = get_class($this);
+		$this->$widgetType = get_class($this);
 		
 	}
 	

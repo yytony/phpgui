@@ -3,10 +3,11 @@
 
 require_once 'Widget.php';
 
-class Button extends Widget {
+class Button extends Input {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->type = "submit";
 		$this->width = 50;
 		$this->height = 30;
 		$this->background->color = '#909090';
