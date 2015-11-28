@@ -1,9 +1,10 @@
 <?php
 
 
-require_once 'Widget.php';
+require_once 'Input.php';
 
 class Button extends Input {
+	public $bindFormAction = null;
 	
 	public function __construct(){
 		parent::__construct();
@@ -16,4 +17,21 @@ class Button extends Input {
 		$this->border->outSet = true;	
 	}
 	
+	public function bindFormAction($formId, $action){
+		if($action === null || $formId === null)	return ;
+		
+		$this->bindFormAction = sprintf(" onClick=\"document.getElementById('%s').setAttribute('action', '%s');\" " 
+								, $formId, $action);
+		
+		
+	}
+	
+	public function render($depth){
+		if($this->bindFormAction !== null){
+			$this->renderInput($depth, $this->bindFormAction);
+		}
+		else{ 
+			$this->renderInput($depth, null);
+		}
+	}
 }

@@ -5,37 +5,37 @@ require_once 'Widget.php';
 
 class Label extends Widget {
 	public $text = '';
-	public $hyperlink = null;
+	public $href = null;
 	
 	public function render($depth){
 		$class_name = get_class($this);
 //		echo "class name : $class_name";
 		
-		$div_str = "";
+		$ret = "";
 		for($i = 0; $i < $depth; $i++)
-			$div_str .= "    ";
+			$ret .= "    ";
 		
-		$div_str .= "<a id=\"" . $this->id . "\" "
+		$ret .= "<a id=\"" . $this->id . "\" "
 			."class=\"" . $this->class . "\" "
 			."style=\"" . $this->formatStyle()
 			;
 	
-		$div_str .= "\" "; // end of style attribute
+		$ret .= "\" "; // end of style attribute
 		
-		if($this->hyperlink !== null && is_string($this->hyperlink))
-			$div_str .= sprintf("href=\"%s\" ", $this->hyperlink);
+		if($this->href !== null && is_string($this->href))
+			$ret .= sprintf("href=\"%s\" ", $this->href);
 		
-		$div_str .= ">" . $this->text . "\n";
-		echo "$div_str";
+		$ret .= ">" . $this->text . "\n";
+		echo "$ret";
 
 		$this->renderChildren($depth + 1);
 				
-		$div_str = "";
+		$ret = "";
 		for($i = 0; $i < $depth; $i++)
-			$div_str .= "    ";
+			$ret .= "    ";
 		
-		$div_str .="</a>\n";
-		echo "$div_str";
+		$ret .="</a>\n";
+		echo "$ret";
 		
 	}
 }

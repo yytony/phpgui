@@ -35,6 +35,7 @@ $a->font->size = 23;
 
 $b = new Button();
 $b->x = 400;
+$b->bindFormAction("myform", "/a/b/c?");
 
 
 $page->addChild($w);

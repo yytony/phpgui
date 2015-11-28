@@ -12,7 +12,7 @@ class Page extends Widget {
 		parent::__construct();
 		$this->width = '100%';
 		$this->height = '100%';
-		
+		$this->addJsFile("/phpgui/js/util.js");
 	}
 	
 	function __destruct(){
@@ -41,7 +41,7 @@ class Page extends Widget {
 		echo "<html>\n";
 		
 		echo "<head>\n";
-			echo "<meta charset=\"utf-8\">\n";
+			echo "\t<meta charset=\"utf-8\">\n";
 			if($this->title !== null)
 				echo sprintf("\t<title>%s</title>\n", $this->title);
 			
@@ -54,7 +54,7 @@ class Page extends Widget {
 			if($this->jsFiles !== null) {
 				$len = count($this->jsFiles);
 				for($i = 0; $i < $len; $i ++){
-					echo sprintf("\t<script type=\"text/javascript\" src=\"%s\" />\n", $this->jsFiles[$i]);
+					echo sprintf("\t<script type=\"text/javascript\" src=\"%s\" ></script>\n", $this->jsFiles[$i]);
 				}
 			}
 		echo "</head>\n";

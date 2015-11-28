@@ -1,6 +1,6 @@
 <?php 
 
-
+require_once 'Config.php';
 
 class Pen {
 	
@@ -225,7 +225,7 @@ class Widget {
 		if($this->font === null)    		$this->font = new Font();
 		if($this->fireAction === null)		$this->fireAction = new FireAction();
 		
-		$this->$widgetType = get_class($this);
+		$this->widgetType = get_class($this);
 		
 	}
 	
@@ -290,7 +290,7 @@ class Widget {
 		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
 		
 		$ret .= sprintf("<div id=\"%s\" class=\"%s\" ", $this->id, $this->class);
-//		$ret .= "style=\"" . $this->formatStyle() ."\" ";
+
 		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
 		$ret .= ">\n";
 		echo $ret;

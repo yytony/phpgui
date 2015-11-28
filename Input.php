@@ -27,6 +27,10 @@ class Input extends Widget {
 	}
 
 	public function render($depth){
+		$this->renderInput($depth, null);
+	}
+	
+	public function renderInput($depth, $spicific_attrs){
 		if($this->type === null)	return;
 	
 		$ret = "";
@@ -82,12 +86,16 @@ class Input extends Widget {
 				$ret .= sprintf("disabled=\"disabled\" ");
 		}
 		
+		// html5
 		if($this->form !== NULL && is_string($this->form))
 			$ret .= sprintf("form=\"%s\" ", $this->form);
 		if($this->formAction !== NULL && is_string($this->formAction))
 			$ret .= sprintf("formaction=\"%s\" ", $this->formAction);
 		if($this->formMethod !== NULL && is_string($this->formMethod))
-			$ret .= sprintf("form=\"%s\" ", $this->formMethod);
+			$ret .= sprintf("formmethod=\"%s\" ", $this->formMethod);
+		
+		// for subclass to render spicific attributes
+		if($spicific_attrs !== null)		$ret .= $spicific_attrs . " ";
 		
 		$ret .= ">\n";
 		echo $ret;
