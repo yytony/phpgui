@@ -211,7 +211,10 @@ class Widget {
 	public $background = null;
 	public $border = null;
 	public $font = null;
-	public $cssFile = null;
+	public $cssFiles = null;
+	public $jsFiles = null;
+	public $jsListeners = null;
+	public $jsCode = null;
 	public $style = null;
 		
 	public $parent = null;
@@ -250,6 +253,73 @@ class Widget {
 		
 	}
 	
+	public function addJsFile($jsf){
+		if($this->jsFiles === null)			$this->jsFiles = array();
+		array_push($this->jsFiles, $jsf);
+		return;
+	}
+	
+	public function addCssFile($cssf){
+		if($this->cssFiles === null)			$this->cssFiles = array();
+		array_push($this->cssFiles, $cssf);
+		return;
+	}
+	
+	public function collectJsFiles($jsFilesRet){
+		if($jsFilesRet === null)	return;
+		
+		if($this->jsFiles !== null){
+			foreach($this->jsFiles as $jsf){
+				array_push($jsFilesRet, $jsf);
+			}
+		}
+
+		if($this->children !== null){
+			$len = count($this->children);
+			for($i = 0; $i < $len; $i ++){
+				$c = $this->children[$i];
+				$c->collectJsFiles($jsFilesRet);
+			}			
+		}
+		return $jsFilesRet;
+	}
+	
+	public function collectcssFiles($cssFilesRet){
+		if($cssFilesRet === null)	return;
+		
+		if($this->cssFiles !== null){
+			foreach($this->cssFiles as $cssf){
+				array_push($cssFilesRet, $cssf);
+			}
+		}
+
+		if($this->children !== null){
+			$len = count($this->children);
+			for($i = 0; $i < $len; $i ++){
+				$c = $this->children[$i];
+				$c->collectcssFiles($cssFilesRet);
+			}			
+		}
+		return $cssFilesRet;
+	}
+	
+	public function addJsListener($event, $jsCode){
+		if(! is_string($event) || ! is_string($jsCode))	return ;
+		
+		if($this->jsListeners === null)  $this->jsListeners = array();
+		
+		$oldJsCode = $this->jsListeners[$event];
+		if($oldJsCode === null)		$oldJsCode = "";
+		
+		$this->jsListeners[$event] = $oldJsCode . $jsCode;
+		return;
+	}
+	
+	public function addJsCode($jsCode){
+		if($this->jsCode === null)	$this->jsCode = "";
+		
+		$this->jsCode .= $jsCode;
+	}
 	
 	public function formatStyle(){
 		$ret = 'position:absolute;';
@@ -285,6 +355,36 @@ class Widget {
 		return;
 	}
 	
+	public function indentDepth($depth){
+		$ret = "";
+		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
+		return $ret;	
+	}
+	
+	public function formatJsListeners(){
+		$ret = "";
+		if($this->jsListeners !== null){
+			$keys = array_keys($this->jsListeners);
+			$len = count($keys);
+				
+			if($len > 0){
+				foreach($keys as $key){
+					$ret .= sprintf("%s=\"%s\" ", $key, $this->jsListeners[$key]);
+				}
+			}
+		}
+		return $ret;
+	}
+	
+	public function formatJsCode($depth){
+		$ret = "";
+		if($this->jsCode !== null){
+			$ret .= indentDepth($depth) . sprintf("<script type=\"text/javascript\">\n%s\n", $this->jsCode);
+			$ret .= indentDepth($depth) . "</script>\n";
+		}
+		return ret;
+	}
+	
 	public function render($depth){
 		$ret = "";
 		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
@@ -292,9 +392,14 @@ class Widget {
 		$ret .= sprintf("<div id=\"%s\" class=\"%s\" ", $this->id, $this->class);
 
 		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		
+		$ret .= $this->formatJsListeners();
+		
 		$ret .= ">\n";
 		echo $ret;
 		
+		$ret .= $this->formatJsCode($depth);
+				
 		$this->renderChildren($depth + 1);
 		
 		$ret = "";

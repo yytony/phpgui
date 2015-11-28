@@ -45,16 +45,21 @@ class Page extends Widget {
 			if($this->title !== null)
 				echo sprintf("\t<title>%s</title>\n", $this->title);
 			
-			if($this->cssFiles !== null) {
-				$len = count($this->cssFiles);
+			$allCssFiles = array();
+			$this->collectcssFiles($allCssFiles);
+			$len = count($allCssFiles);
+			if($len > 0) {
 				for($i = 0; $i < $len; $i ++){
-					echo sprintf("\t<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", $this->cssFiles[$i]);
+					echo sprintf("\t<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", $allCssFiles[$i]);
 				}
 			}
-			if($this->jsFiles !== null) {
-				$len = count($this->jsFiles);
+			
+			$allJsFiles = array();
+			$this->collectJsFiles($allJsFiles);
+			$len = count($allJsFiles);
+			if($len > 0 ) {
 				for($i = 0; $i < $len; $i ++){
-					echo sprintf("\t<script type=\"text/javascript\" src=\"%s\" ></script>\n", $this->jsFiles[$i]);
+					echo sprintf("\t<script type=\"text/javascript\" src=\"%s\" ></script>\n", $allJsFiles[$i]);
 				}
 			}
 		echo "</head>\n";
