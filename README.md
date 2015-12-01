@@ -93,3 +93,8 @@ $page->addChild($img);<br/>
 <br/>
 $page->renderPage();<br/>
 
+++++++++++++++++++++++++++++++++++++++<br/>
+This is snapshot :<br/>
+<img src="https://github.com/yytony/phpgui/blob/master/img/snapshot1.png"/>
+
+
