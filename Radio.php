@@ -8,4 +8,6 @@ class Radio extends Input {
 		parent::__construct();
 		$this->type = "radio";
 	}
+	
+	
 }

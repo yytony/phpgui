@@ -43,5 +43,51 @@ $w->addChild($c);
 $c->addChild($a);
 $c->addChild($b);
 
+
+$form = new Form("post", "Myform", "/TestGui.php");
+$form->x = 200;
+$form->y = 10;
+$form->width = 200;
+$form->height = 50;
+
+$input_text = new TextField();
+$input_text->name = "text1";
+$input_text->width = 200;
+$input_text->height = 20;
+$input_text->border->width = 1;
+$input_text->border->color = "#00ff00";
+
+$input_checkbox = new CheckBox();
+$input_checkbox->name = "checkbox1";
+$input_checkbox->x = 100;
+
+$input_checkbox_label = new Label();
+$input_checkbox_label->text = "hello";
+$input_checkbox_label->x = 115;
+
+
+$but = new Button();
+$but->name = "AllOk";
+$but->value = "That Ok";
+$but->width = 70;
+$but->y = 10;
+
+$form->addChild($input_text);
+$form->addChild($input_checkbox);
+$form->addChild($input_checkbox_label);
+$form->addChild($but);
+
+$page->addChild($form);
+
+$img = new Image();
+$img->src = "/phpgui/img/test.jpg";
+$img->x = 800;
+$img->y = 200;
+$img->width = 300;
+$img->height = 200;
+
+$page->addChild($img);
+
+
 $page->renderPage();
 

@@ -6,16 +6,6 @@ class Form extends Widget {
 	public $action = null;
 	public $name = null;
 	
-	public function __construct(){
-		parent::__construct();
-	}
-	
-	public function __construct($name , $action){
-		parent::__construct();
-		$this->name = $name;
-		$this->action = $action;
-	}
-	
 	public function __construct($method, $name , $action){
 		parent::__construct();
 		$this->method = $method;

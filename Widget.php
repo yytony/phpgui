@@ -326,15 +326,18 @@ class Widget {
 		$ret .= $this->background->formatStyle();
 		$ret .= $this->border->formatStyle();
 		
-		$ret .= sprintf("top:%dpx;", $this->y);
-		$ret .= sprintf("left:%dpx;", $this->x);
-		if(is_int($this->width))
+		if(is_int($this->y) && $this->y !== 0)
+			$ret .= sprintf("top:%dpx;", $this->y);
+		if(is_int($this->x) && $this->x !== 0)
+			$ret .= sprintf("left:%dpx;", $this->x);
+		
+		if(is_int($this->width) && $this->width !== 0)
 			$ret .= sprintf("width:%dpx;", $this->width);
 		else if(is_string($this->width))
 			$ret .= sprintf("width:%s;", $this->width);
 		else{}
 		
-		if(is_int($this->height))
+		if(is_int($this->height) && $this->height !== 0)
 			$ret .= sprintf("height:%dpx;", $this->height);
 		else if(is_string($this->height))
 			$ret .= sprintf("height:%s;", $this->height);
@@ -382,7 +385,7 @@ class Widget {
 			$ret .= indentDepth($depth) . sprintf("<script type=\"text/javascript\">\n%s\n", $this->jsCode);
 			$ret .= indentDepth($depth) . "</script>\n";
 		}
-		return ret;
+		return $ret;
 	}
 	
 	public function render($depth){

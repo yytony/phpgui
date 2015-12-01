@@ -97,6 +97,8 @@ class Input extends Widget {
 		// for subclass to render spicific attributes
 		if($spicific_attrs !== null)		$ret .= $spicific_attrs . " ";
 		
+		$ret .= sprintf("style=\"%s\" ", parent::formatStyle());
+		
 		$ret .= ">\n";
 		echo $ret;
 		
@@ -104,7 +106,7 @@ class Input extends Widget {
 		
 		$ret = "";
 		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
-		echo "</input>\n";
+		echo $ret . "</input>\n";
 		
 	}
 	

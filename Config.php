@@ -1,6 +1,5 @@
 <?php
 
-$phpgui_dir = __DIR__;
 
 $entry_script_file =  $_SERVER['PHP_SELF'];
 $entry_server_path = dirname($entry_script_file);
@@ -23,3 +22,13 @@ echo "config file: $phpgui_config_abs_file_path<br/>";
 echo "config dir: $PHPgui_config_abs_dir<br/>";
 */
 
+//echo "entry server path: $entry_server_path<br/>";
+//echo "config dir: $PHPgui_config_abs_dir<br/>";
+
+
+
+$ApplicationName = "";
+
+
+$PHPGUI_ROOT = "";
+ 
