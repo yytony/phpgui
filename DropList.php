@@ -59,7 +59,7 @@ class OptionGroup extends  Widget {
 		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
 		
 		$ret .= sprintf("<optgroup id=\"%s\" ", $this->id);
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 		
 		if($this->disabled === true)
 			$ret .= sprintf("disabled=\"disabled\" ");
@@ -95,7 +95,7 @@ class DropList extends Widget {
 		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
 	
 		$ret .= sprintf("<select id=\"%s\" ", $this->id);
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 	
 		if($this->disabled === true)
 			$ret .= sprintf("disabled=\"disabled\" ");

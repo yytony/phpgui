@@ -22,6 +22,12 @@ class Input extends Widget {
 	public $formAction = null;
 	public $formMethod = null;
 	
+	const ALIGN_LEFT = "left";
+	const ALIGN_RIGHT = "right";
+	const ALIGN_TOP = "top";
+	const ALIGN_MIDDLE = "middle";
+	const ALIGN_BOTTOM = "bottom";
+	
 	public function __construct(){
 		parent::__construct();
 	}
@@ -97,7 +103,7 @@ class Input extends Widget {
 		// for subclass to render spicific attributes
 		if($spicific_attrs !== null)		$ret .= $spicific_attrs . " ";
 		
-		$ret .= sprintf("style=\"%s\" ", parent::formatStyle());
+		$ret .= sprintf("style=\"%s\" ", parent::formatStyle(null));
 		
 		$ret .= ">\n";
 		echo $ret;

@@ -17,7 +17,7 @@ class Label extends Widget {
 		
 		$ret .= "<a id=\"" . $this->id . "\" "
 			."class=\"" . $this->class . "\" "
-			."style=\"" . $this->formatStyle()
+			."style=\"" . $this->formatStyle(null)
 			;
 	
 		$ret .= "\" "; // end of style attribute

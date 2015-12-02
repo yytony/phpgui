@@ -22,4 +22,3 @@ require_once 'TextArea.php';
 require_once 'TextField.php';
 
 require_once 'Logger.php';
-require_once 'Constants.php';

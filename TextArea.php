@@ -12,6 +12,9 @@ class TextArea extends  Widget {
 	public $maxLength = null;
 	public $wrap = 'hard';  // soft
 	
+	const WRAP_HARD = "hard";
+	const WRAP_SOFT = "soft";
+	
 	public function __construct(){
 		parent::__construct();
 	}
@@ -22,7 +25,7 @@ class TextArea extends  Widget {
 	
 		$ret .= sprintf("<textarea id=\"%s\" ", $this->id);
 	
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 	
 		if($this->name !== null)
 			$ret .= sprintf("name=\"%s\" ", $this->name);

@@ -1,37 +1,14 @@
 <?php 
 
 require_once 'Config.php';
+require_once 'Font.php';
+require_once 'Border.php';
+
 
 class Pen {
 	
 }
 
-class Font {
-	public $family = null; // "times sans-serif"
-	public $style = null; // normal, italic , oblique
-	public $weight = null;
-	public $size = null;
-	public $sizeUnit = 'px';
-	
-	public function formatStyle(){
-		$ret = "";
-		
-		if($this->family !== null)
-			$ret .= sprintf("font-family:%s;", $this->family);
-		if($this->style !== null)
-			$ret .= sprintf("font-style:%s;", $this->style);
-		if($this->weight !== null){
-			if(is_int($this->weight))
-				$ret .= sprintf("font-weight:%d;", $this->weight);
-			else if(is_string($this->weight))
-				$ret .= sprintf("font-weight:%s;", $this->weight);
-		}
-		if($this->size !== null && is_int($this->size))
-			$ret .= sprintf("font-size:%d;", $this->size);
-
-		return $ret;
-	}
-}
 
 
 class Background {
@@ -41,6 +18,29 @@ class Background {
 	public $image = null;
 	public $position = null;
 	public $repeat = null;
+	public $attachment = null; // "scroll" fixed
+	
+	// CSS 3
+	public $size = null;
+	public $origin = null;
+	
+	const REPEAT_X = "repeat-x";
+	const REPEAT_Y = "repeat-y";
+	const REPEAT_NO = "no-repeat";
+	
+	const POSITION_LEFT = "left";
+	const POSITION_RIGHT = "right";
+	const POSITION_TOP = "top";
+	const POSITION_BOTTOM = "bottom";
+	const POSITION_CENTER = "center";
+	
+	const ATTACHMENT_SCROLL = "scroll";
+	const ATTACHMENT_FIXED = "fixed";
+	
+	const ORIGIN_CONTENT_BOX = "content_box";
+	const ORIGIN_PADDING_BOX = "padding_box";
+	const ORIGIN_BORDER_BOX = "border_box";
+	
 	
 	public function formatStyle(){
 		$ret = '';
@@ -63,93 +63,18 @@ class Background {
 		if($this->repeat !== null)
 			$ret .= sprintf("background-repeat:%s;", $this->repeat);
 		
+		if($this->attachment !== null)
+			$ret .= sprintf("background-attachment:%s;", $this->attachment);
+		
+		if($this->origin !== null){
+			$ret .= sprintf("background-origin:%s;",$this->origin);
+			$ret .= sprintf("-webkit-background-origin:%s;",$this->origin);
+		}
+		
 		return $ret;
 	}
 }
 
-class Border {
-	public $color = null;
-	public $width = null;
-	public $style = null;
-	public $outSet = false;
-	
-	public $topColor = null;
-	public $rightColor = null;
-	public $bottomColor = null;
-	public $leftColor = null;
-	
-	public $topWidth = null;
-	public $rightWidth = null;
-	public $bottomWidth = null;
-	public $leftWidth = null;
-	
-	public $topStyle = null;
-	public $rightStyle = null;
-	public $bottomStyle = null;
-	public $leftStyle = null;
-	
-	public function formatStyle(){
-		
-		$squre_color_is_null = 		($this->topColor === null) && ($this->rightColor === null) 
-								&&  ($this->bottomColor === null) && ($this->leftColor === null) ;
-		$squre_width_is_null = 		($this->topWidth === null) && ($this->rightWidth === null)
-								&&  ($this->bottomWidth === null) && ($this->leftWidth === null) ;
-		$squre_style_is_null = 		($this->topStyle === null) && ($this->rightStyle === null)
-								&&  ($this->bottomStyle === null) && ($this->leftStyle === null) ;
-		
-		$squre_all_is_null = $squre_color_is_null && $squre_style_is_null && $squre_width_is_null;
-		$all_is_null = $squre_all_is_null 
-						&& ($this->color === null) && ($this->width === null) && ($this->style === null)
-						&& ($this->outSet === null);
-		$border_is_null = $this->color === null && $this->width === null && $this->style === null;
-		
-		if($all_is_null) return ;
-		
-		$ret = '';
-		if($squre_all_is_null){
-			if(! $border_is_null){
-				$ret .= "border:";
-				if($this->width !== null && is_int($this->width))	
-					$ret .= sprintf("%dpx ",$this->width);
-				else if($this->width !== null && is_string($this->width))	
-					$ret .= sprintf("%s ",$this->width);
-				else 												
-					$ret .= "0px ";
-					
-				if($this->style !== null && is_string($this->style)) 	$ret .= $this->style . " ";
-				else													$ret .= "solid ";
-				if($this->color !== null && is_string($this->color)) 	$ret .= $this->color . ";";
-				else													$ret .="transparent;";
-			}
-		}
-		else{
-			if($squre_color_is_null){
-				if($this->topColor !== null) 	$ret .= sprintf("border-top-color:%s;", $this->topColor);
-				if($this->rightColor !== null) 	$ret .= sprintf("border-right-color:%s;", $this->rightColor);
-				if($this->bottomColor !== null) $ret .= sprintf("border-bottom-color:%s;", $this->bottomColor);
-				if($this->leftColor !== null) 	$ret .= sprintf("border-left-color:%s;", $this->leftColor);
-			}
-			if($squre_width_is_null){
-				if($this->topWidth !== null) 	$ret .= sprintf("border-top-width:%s;", $this->topWidth);
-				if($this->rightWidth !== null) 	$ret .= sprintf("border-right-width:%s;", $this->rightWidth);
-				if($this->bottomWidth !== null) $ret .= sprintf("border-bottom-width:%s;", $this->bottomWidth);
-				if($this->leftWidth !== null) 	$ret .= sprintf("border-left-width:%s;", $this->leftWidth);
-			}
-			if($squre_style_is_null){
-				if($this->topStyle !== null) 	$ret .= sprintf("border-top-style:%s;", $this->topStyle);
-				if($this->rightStyle !== null) 	$ret .= sprintf("border-right-style:%s;", $this->rightStyle);
-				if($this->bottomStyle !== null) $ret .= sprintf("border-bottom-style:%s;", $this->bottomStyle);
-				if($this->leftStyle !== null) 	$ret .= sprintf("border-left-style:%s;", $this->leftStyle);
-			}
-		}
-		
-		if($this->outSet === true )
-			$ret .= "border-style:outset;";
-		
-		return $ret;
-	}
-	
-}
 
 class FireAction {
 	public $url = null;
@@ -215,7 +140,16 @@ class Widget {
 	public $jsFiles = null;
 	public $jsListeners = null;
 	public $jsCode = null;
-	public $style = null;
+//	public $style = null;
+
+	// CSS 3
+	public $transform = null;
+	public $transition = null;
+	public $columnCount = null;
+	public $columnRule = null;
+	public $columnGap = null;
+	public $columnFill =null;
+	public $columnWidth = null;
 		
 	public $parent = null;
 	public $children = null;
@@ -321,7 +255,63 @@ class Widget {
 		$this->jsCode .= $jsCode;
 	}
 	
-	public function formatStyle(){
+	public function rotate($degree){
+		if(! is_int($degree)) return;
+		
+		$rotate_str = sprintf("transform:rotate(%ddeg);",$degree);
+		$rotate_str .= sprintf("-ms-transform:rotate(%ddeg);",$degree);
+		$rotate_str .= sprintf("-moz-transform:rotate(%ddeg);",$degree);
+		$rotate_str .= sprintf("-webkit-transform:rotate(%ddeg);",$degree);
+		
+		if($this->transform === null)
+			$this->transform = $rotate_str;
+		else 
+			$this->transform .= $rotate_str;
+	}
+	
+	public function translate($x, $y){
+		if(! is_int($x) || ! is_int($y)) return;
+		
+		$translate_str = sprintf("transform:translate(%dpx, %dpx);",$x, $y);
+		$translate_str .= sprintf("-ms-transform:translate(%dpx, %dpx);",$x, $y);
+		$translate_str .= sprintf("-moz-transform:translate(%dpx, %dpx);",$x, $y);
+		$translate_str .= sprintf("-webkit-transform:translate(%dpx, %dpx);",$x, $y);
+		
+		if($this->transform === null)
+			$this->transform = $translate_str;
+		else 
+			$this->transform .= $translate_str;
+	}
+	
+	public function scale($xe, $ye){
+		if(! is_int($xe) || ! is_int($ye)) return;
+		
+		$scale_str = sprintf("transform:scale(%dpx, %dpx);",$xe, $ye);
+		$scale_str .= sprintf("-ms-transform:scale(%dpx, %dpx);",$xe, $ye);
+		$scale_str .= sprintf("-moz-transform:scale(%dpx, %dpx);",$xe, $ye);
+		$scale_str .= sprintf("-webkit-transform:scale(%dpx, %dpx);",$xe, $ye);
+		
+		if($this->transform === null)
+			$this->transform = $scale_str;
+		else 
+			$this->transform .= $scale_str;
+	}
+	
+	public function skew($xdeg, $ydeg){
+		if(! is_int($xdeg) || ! is_int($ydeg)) return;
+		
+		$skew_str = sprintf("transform:skew(%ddeg, %ddeg);",$xdeg, $ydeg);
+		$skew_str .= sprintf("-ms-transform:skew(%ddeg, %ddeg);",$xdeg, $ydeg);
+		$skew_str .= sprintf("-moz-transform:skew(%ddeg, %ddeg);",$xdeg, $ydeg);
+		$skew_str .= sprintf("-webkit-transform:skew(%ddeg, %ddeg);",$xdeg, $ydeg);
+		
+		if($this->transform === null)
+			$this->transform = $skew_str;
+		else 
+			$this->transform .= $skew_str;
+	}
+	
+	public function formatStyle($more){
 		$ret = 'position:absolute;';
 		$ret .= $this->background->formatStyle();
 		$ret .= $this->border->formatStyle();
@@ -344,6 +334,23 @@ class Widget {
 		else{}
 		
 		$ret .= $this->font->formatStyle();
+		
+		if($this->transform !== null){
+			$ret .= sprintf("transform:%s;", $this->transform);
+			$ret .= sprintf("-ms-transform:%s;", $this->transform);
+			$ret .= sprintf("-webkit-transform:%s;", $this->transform);
+			$ret .= sprintf("-moz-transform:%s;", $this->transform);
+		}
+		
+		if($this->transition !== null){
+			$ret .= sprintf("transition:%s;", $this->transition);
+			$ret .= sprintf("-moz-transition:%s;", $this->transition);
+			$ret .= sprintf("-webkit-transition:%s;", $this->transition);
+		}
+		
+		if($more !== null)
+			$ret .= $more ;
+		
 		return $ret;
 	}
 	
@@ -394,7 +401,7 @@ class Widget {
 		
 		$ret .= sprintf("<div id=\"%s\" class=\"%s\" ", $this->id, $this->class);
 
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 		
 		$ret .= $this->formatJsListeners();
 		

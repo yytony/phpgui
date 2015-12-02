@@ -14,7 +14,8 @@ class Button extends Input {
 		$this->background->color = '#909090';
 		$this->border->color = '#808080';
 		$this->border->width = "3px";
-		$this->border->outSet = true;	
+		$this->border->outSet = true;
+		$this->value = "OK";	
 	}
 	
 	public function bindFormAction($formId, $action){

@@ -19,7 +19,7 @@ class Form extends Widget {
 		
 		$ret .= sprintf("<form id=\"%s\" ", $this->id);
 		
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 		
 		if($this->name !== null)
 			$ret .= sprintf("name=\"%s\" ", $this->name);

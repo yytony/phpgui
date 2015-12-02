@@ -9,6 +9,10 @@ class Area {
 	private  $circleCoords = null;
 	private  $ploygonCoords = null;
 	
+	const SHAPE_RECT = "rect";
+	const SHAPE_CIRCLE = "circ";
+	const SHAPE_POLYGON = "poly";
+	
 	public function setRectCoords($x1, $y1, $x2, $y2){
 		$this->rectCoords = sprintf("%s, %s, %s, %s", $x1, $y1, $x2, $y2);
 	}
@@ -115,7 +119,7 @@ class Image extends Widget {
 	
 		$ret .= sprintf("<img id=\"%s\" ", $this->id);
 	
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle());
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
 
 		if($this->src !== null)
 			$ret .= sprintf("src=\"%s\" ", $this->src);
