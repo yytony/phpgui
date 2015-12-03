@@ -8,7 +8,7 @@ class Font {
 	public $sizeUnit = 'px';
 	
 	// CSS 3
-	public face = null;
+	public $face = null;
 
 	const STYLE_NORMAL = "normal";
 	const STYLE_ITALIC = "italic";

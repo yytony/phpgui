@@ -78,7 +78,7 @@ class Background {
 
 class FireAction {
 	public $url = null;
-	private $paramters = null;
+	protected  $paramters = null;
 	public $hash = null;
 	
 	public function setParameter($key, $val){
@@ -132,6 +132,7 @@ class Widget {
 	public $x = 0;
 	public $y = 0;
 	public $z = 0;
+	public $float = null;
 	
 	public $background = null;
 	public $border = null;
@@ -143,18 +144,24 @@ class Widget {
 //	public $style = null;
 
 	// CSS 3
-	public $transform = null;
-	public $transition = null;
+	protected  $transform = null;
+	protected  $transition = null;
 	public $columnCount = null;
 	public $columnRule = null;
 	public $columnGap = null;
 	public $columnFill =null;
 	public $columnWidth = null;
+	public $resize = false;
 		
 	public $parent = null;
-	public $children = null;
+	protected  $children = null;
 	
 	public $fireAction = null;
+	
+	const FLOAT_NONE = "none";
+	const FLOAT_LEFT = "left";
+	const FLOAT_RIGHT = "right";
+	const FLOAT_INHERIT = "inherit";
 	
 	public function __construct(){
 		if($this->border === null)    		$this->border = new Border();
@@ -311,6 +318,18 @@ class Widget {
 			$this->transform .= $skew_str;
 	}
 	
+	public function setTransition($attribute, $time_intval){
+		if(! is_string($attribute) || ! is_int($time_intval))	return;
+		
+		if($this->transition === null){
+			$this->transition = array();
+			$this->transition[$attribute] = $time_intval;
+		}
+		else{
+			$this->transition[$attribute] = $time_intval;
+		} 
+	}
+	
 	public function formatStyle($more){
 		$ret = 'position:absolute;';
 		$ret .= $this->background->formatStyle();
@@ -335,17 +354,71 @@ class Widget {
 		
 		$ret .= $this->font->formatStyle();
 		
+		if($this->float !== null)
+			$ret .= sprintf("float:%s;", $this->float);
+		
 		if($this->transform !== null){
-			$ret .= sprintf("transform:%s;", $this->transform);
-			$ret .= sprintf("-ms-transform:%s;", $this->transform);
-			$ret .= sprintf("-webkit-transform:%s;", $this->transform);
-			$ret .= sprintf("-moz-transform:%s;", $this->transform);
+			$ret .= sprintf("%s", $this->transform);
 		}
 		
 		if($this->transition !== null){
-			$ret .= sprintf("transition:%s;", $this->transition);
-			$ret .= sprintf("-moz-transition:%s;", $this->transition);
-			$ret .= sprintf("-webkit-transition:%s;", $this->transition);
+			$keys = array_keys($this->transition);
+			$len = count($this->transition);
+			
+			$common_str = "transition:";
+			$moz_str = "-moz-transition:";
+			$webkit_str = "-webkit-transition:";
+
+			$i = 0;
+			foreach ($keys as $k){
+				$val = $this->transition[$k];
+				
+				if($k === "transform"){
+					$common_str .= sprintf("%s %ds", $k, $val);
+					$moz_str .= sprintf("-moz-%s %ds", $k, $val);
+					$webkit_str .= sprintf("-webkit-%s %ds", $k, $val);
+				}
+				else{
+					$common_str .= sprintf("%s %ds", $k, $val);
+					$moz_str .= sprintf("%s %ds", $k, $val);
+					$webkit_str .= sprintf("%s %ds", $k, $val);
+				}
+				
+				if($i + 1 < $len){
+					$common_str .= ",";
+					$moz_str .= ",";
+					$webkit_str .= ",";
+				}
+				else{
+					$common_str .= ";";
+					$moz_str .= ";";
+					$webkit_str .= ";";
+				}
+				
+				$i ++;
+			}// foreach
+			
+			$ret .= $common_str . $moz_str . $webkit_str;
+		}
+		
+		if(is_int($this->columnCount)){
+			$ret .= sprintf("column-count:%d;", $this->columnCount);
+			$ret .= sprintf("-moz-column-count:%d;", $this->columnCount);
+			$ret .= sprintf("-webkit-column-count:%d;", $this->columnCount);
+		}
+		if(is_int($this->columnGap)){
+			$ret .= sprintf("column-gap:%dpx;", $this->columnGap);
+			$ret .= sprintf("-moz-column-gap:%dpx;", $this->columnGap);
+			$ret .= sprintf("-webkit-column-gap:%dpx;", $this->columnGap);
+		}
+		if(is_string($this->columnRule)){
+			$ret .= sprintf("column-rule:%s;", $this->columnRule);
+			$ret .= sprintf("-moz-column-rule:%s;", $this->columnRule);
+			$ret .= sprintf("-webkit-column-rule:%s;", $this->columnRule);
+		}
+		
+		if($this->resize === true){
+			$ret .= sprintf("resize:both;");
 		}
 		
 		if($more !== null)

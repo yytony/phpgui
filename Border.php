@@ -6,6 +6,7 @@ class Border {
 	public $width = null;
 	public $style = null;
 	public $outSet = false;
+	public $overflow = null;
 	
 	//CSS 3
 	public $radius = null;
@@ -38,6 +39,11 @@ class Border {
 	const STYLE_INSET = "inset";
 	const STYLE_OUTSET = "outset";
 	const STYLE_INHERIT = "inherit";
+	
+	const OVERFLOW_VISIBLE = "visible";
+	const OVERFLOW_HIDDEN = "hidden";
+	const OVERFLOW_SCROLL = "scroll";
+	const OVERFLOW_AUTO = "auto";
 	
 	public function setRadius($r){
 		if(! is_int($r)) return;
@@ -127,6 +133,10 @@ class Border {
 			$ret .= sprintf("box-shadow:%s;", $this->boxShadow);
 		}
 			
+		if($this->overflow !== null){
+			$ret .= sprintf("overflow:%s;", $this->overflow);
+		}
+		
 		return $ret;
 	}
 
