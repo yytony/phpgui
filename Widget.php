@@ -206,11 +206,12 @@ class Widget {
 		return;
 	}
 	
-	public function collectJsFiles($jsFilesRet){
+	public function collectJsFiles(&$jsFilesRet){
 		if($jsFilesRet === null)	return;
 		
 		if($this->jsFiles !== null){
 			foreach($this->jsFiles as $jsf){
+//				echo ">> push js file: $jsf<br/>";
 				array_push($jsFilesRet, $jsf);
 			}
 		}
@@ -225,11 +226,12 @@ class Widget {
 		return $jsFilesRet;
 	}
 	
-	public function collectcssFiles($cssFilesRet){
+	public function collectcssFiles(&$cssFilesRet){
 		if($cssFilesRet === null)	return;
 		
 		if($this->cssFiles !== null){
 			foreach($this->cssFiles as $cssf){
+//				echo ">> push css file: $cssf<br/>";
 				array_push($cssFilesRet, $cssf);
 			}
 		}
@@ -470,7 +472,8 @@ class Widget {
 	
 	public function render($depth){
 		$ret = "";
-		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
+		
+		$ret .= $this->indentDepth($depth);
 		
 		$ret .= sprintf("<div id=\"%s\" class=\"%s\" ", $this->id, $this->class);
 
@@ -486,7 +489,7 @@ class Widget {
 		$this->renderChildren($depth + 1);
 		
 		$ret = "";
-		for($i = 0; $i < $depth; $i ++)		$ret .= "    ";
+		$ret .= $this->indentDepth($depth);
 		$ret .="</div>\n";
 		echo $ret;
 	}

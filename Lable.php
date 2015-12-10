@@ -7,6 +7,13 @@ class Label extends Widget {
 	public $text = '';
 	public $href = null;
 	
+	public function __construct($t){
+		parent::__construct();
+		
+		if($t !== null)
+			$this->text = $t;
+	}
+	
 	public function render($depth){
 		$class_name = get_class($this);
 //		echo "class name : $class_name";

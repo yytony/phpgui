@@ -1,5 +1,6 @@
 <?php
 
+require_once 'Config.php';
 
 require_once 'Widget.php';
 require_once 'Page.php';
