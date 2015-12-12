@@ -4,6 +4,40 @@ This a html widgets wrapper library writing in php , for making more "pure" in d
 <br/><br/>
 it work like this:<br/>
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>
+one syntax:<br/>
+<br/>
+$page = new Page();<br/>
+$page->id = "myPage";<br/>
+$page->addChildren(<br/>
+			(new Widget(<br/>
+					(new Widget())<br/>
+					->set("id", "Mycom1.2")<br/>
+					->set("x", 200)<br/>
+					->set("y", 300)<br/>
+					->set("width", 100)<br/>
+					->set("height", 100)<br/>
+					->setBackground("color", "#0000ff")<br/>
+<br/>
+			))->set("id", "Mycom1")<br/>
+			->set("x", 100)<br/>
+			->set("width", 300)<br/>
+			->setBackground("color", "#ff0000")<br/>
+			->set("height", 100),<br/>
+<br/>
+			(new Widget())<br/>
+			->set("id", "Mycom2")<br/>
+			->set("x", 700)<br/>
+			->set("width", 100)<br/>
+			->setBackground("color", "#00ff00")<br/>
+			->set("height", 100)<br/>
+<br/>	
+).renderPage();<br/>
+<br/>
+<br/>
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++<br/>
+Second Syntax:<br/>
+<br/>
+<br/>
 require_once 'phpgui.php';<br/>
 <br/>
 <br/>

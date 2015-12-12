@@ -1,5 +1,6 @@
 <?php 
 
+require_once __DIR__ .'/PGObject.php';
 require_once __DIR__ . '/Font.php';
 require_once __DIR__ . '/Border.php';
 
@@ -10,7 +11,7 @@ class Pen {
 
 
 
-class Background {
+class Background extends PGObject {
 	public $color = null;
 	public $padding = null;
 	public $margin = null;
@@ -75,7 +76,7 @@ class Background {
 }
 
 
-class FireAction {
+class FireAction extends PGObject {
 	public $url = null;
 	protected  $paramters = null;
 	public $hash = null;
@@ -120,7 +121,7 @@ class FireAction {
 	}
 }
 
-class Widget {
+class Widget extends PGObject {
 	public $id=null;
 	public $class = null;
 	public $widgetType = null;
@@ -153,8 +154,6 @@ class Widget {
 	public $columnWidth = null;
 	public $resize = false;
 		
-	public $parent = null;
-	protected  $children = null;
 	
 	public $fireAction = null;
 	private $priv = "ThisIsPrivateValue";
@@ -171,6 +170,9 @@ class Widget {
 	public function  setPriv($s) { $this->priv = $s;}
 	
 	public function __construct(){
+		echo "constuct: id = $this->id<br/>";
+		parent::__construct();
+		
 		if($this->border === null)    		$this->border = new Border();
 		if($this->background === null)    	$this->background = new Background();
 		if($this->font === null)    		$this->font = new Font();
@@ -195,60 +197,40 @@ class Widget {
 		if($this->fireAction !== null)		$this->fireAction = null;
 	}
 	
-	public function getClass()			{  return get_class($this);	}
-	public function getParentClass()	{  return get_parent_class($this);	}
+	public function setBackground($key, $val){
+		if($this->background === null
+				||get_class($this->background) !== "Background")
+					return $this;
 	
-	public function set($key, $val){
-		$ClassName = $this->getClass();
-		$count = 0;
-		while($ClassName !== null && is_string($ClassName)){
-			$reflect = new ReflectionClass($ClassName);
-			$has_prop = $reflect->hasProperty($key);
-			if($has_prop === true){
-				$prop = $reflect->getProperty($key);
-				if($prop->isStatic())
-					$prop->setValue($val);
-				else {
-//					echo "set $key = $val<br/>";
-					$prop->setAccessible(true);
-					$prop->setValue($this, $val);
-				}
-				break;		
-			}
-			else{
-				$ClassName = $this->getParentClass();
-				$reflect = null;
-				
-				$count ++ ;
-				if($count > 20) break;
-				continue;
-			}
-			
-		}// while
-
-		return $this;
+				$this->background->set($key, $val);
+				return $this;
 	}
 	
-	public function addChild($c){
-		
-		if($c === null) return;
-		if($this->children === null) $this->children = array();
-
-		array_push($this->children, $c);
-		$c->parent = $this;
+	public function setBorder($key, $val){
+		if($this->border === null
+				||get_class($this->border) !== "Border")
+					return $this;
+	
+				$this->border->set($key, $val);
+				return $this;
 	}
 	
-	public function removeChild($c){
-		
+	public function setFont($key, $val){
+		if($this->font === null
+				||get_class($this->font) !== "Font")
+					return $this;
+	
+				$this->font->set($key, $val);
+				return $this;
 	}
 	
-	public function addChildren(){
-		$p_num = func_num_args();
-		for($i = 0; $i < $p_num; $i ++){
-			$p = func_get_arg($i);
-			if($p !== null && is_object($p))
-				$this->addChild($p);
-		}
+	public function setFireAction($key, $val){
+		if($this->fireAction === null
+				||get_class($this->fireAction) !== "FireAction")
+					return $this;
+	
+				$this->fireAction->set($key, $val);
+				return $this;
 	}
 	
 	public function addJsFile($jsf){

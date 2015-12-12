@@ -4,9 +4,44 @@ require_once __DIR__ . '/../phpgui.php';
 
 
 $page = new Page();
-$page->id = "MyPage";
 
+$page->id = "myPage";
 
+$page->addChildren(
+			(new Widget(
+					(new Widget())
+					->set("id", "Mycom1.2")
+					->set("x", 200)
+					->set("y", 300)
+					->set("width", 100)
+					->set("height", 100)
+					->setBackground("color", "#0000ff")
+										
+			))->set("id", "Mycom1")
+			->set("x", 100)
+			->set("width", 300)
+			->setBackground("color", "#ff0000")
+			->set("height", 100),
+		
+			(new Widget())
+			->set("id", "Mycom2")
+			->set("x", 700)
+			->set("width", 100)
+			->setBackground("color", "#00ff00")
+			->set("height", 100)
+		
+		);
+
+echo "----------------------------------<br/>";
+//var_dump($page->getChildren());
+
+//var_dump(split("\.","a.b"));
+
+/****************************************
+ * 
+ * 	anohter valid sytax:
+ * 
+ * -----------------------------------
 $w = new Widget();
 $w->id = "MyCom";
 $w->background->color = "#ff0000";
@@ -89,6 +124,6 @@ $img->height = 200;
 
 $page->addChild($img);
 
-
+*/
 $page->renderPage();
 

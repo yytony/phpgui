@@ -1,7 +1,7 @@
 <?php
 
 
-class Border {
+class Border extends PGObject {
 	public $color = null;
 	public $width = null;
 	public $style = null;
