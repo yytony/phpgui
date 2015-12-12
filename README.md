@@ -9,7 +9,9 @@ one syntax:<br/>
 <code>
 $page = new Page();
 $page->id = "myPage";
+
 $page->addChildren(
+
 			(new Widget(
 					(new Widget())
 					->set("id", "Mycom1.2")
