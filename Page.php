@@ -1,8 +1,7 @@
 <?php
 
-require_once 'Config.php';
 
-require_once 'Widget.php';
+require_once __DIR__ . '/Widget.php';
 
 class Page extends Widget {
 	public $title = 'MyPage';
@@ -18,6 +17,8 @@ class Page extends Widget {
 		global $PHPGUI_ROOT;
 		echo "phpgui_root: > $PHPGUI_ROOT";
 		$this->addJsFile($PHPGUI_ROOT . "/js/bootstrap.min.js");
+		$this->addJsFile($PHPGUI_ROOT . "/js/jquery.js");
+		$this->addCssFile($PHPGUI_ROOT . "/css/phpgui.css");
 		$this->addCssFile($PHPGUI_ROOT . "/css/bootstrap.min.css");
 	}
 	

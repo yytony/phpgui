@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+
+
+h1 {
+	
+}
+
+font {
+	font-family: times Times, TimesNR, 'New Century Schoolbook',  Georgia, 'New York', serif sans-serif;
+	font-weight: normal;
+	font-size:16px;
+}
+
+table
+  {
+  	border-collapse:collapse;
+  	left: 5%;
+  	width:90%;
+  }
+  
+table th tr td {
+	border: 1px solid #606060;
+}
+
+th tr td {
+	text-align: center;
+	padding: 3px;
+}
+
+td {
+	height: 30px;
+	padding:3px 3px 3px 3px;
+	text-align: left;
+	vertical-align: center;
+	color: #202020;
+}

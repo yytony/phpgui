@@ -1,8 +1,7 @@
 <?php 
 
-require_once 'Config.php';
-require_once 'Font.php';
-require_once 'Border.php';
+require_once __DIR__ . '/Font.php';
+require_once __DIR__ . '/Border.php';
 
 
 class Pen {
@@ -133,6 +132,7 @@ class Widget {
 	public $y = 0;
 	public $z = 0;
 	public $float = null;
+	public $position = null;
 	
 	public $background = null;
 	public $border = null;
@@ -157,11 +157,18 @@ class Widget {
 	protected  $children = null;
 	
 	public $fireAction = null;
+	private $priv = "ThisIsPrivateValue";
 	
 	const FLOAT_NONE = "none";
 	const FLOAT_LEFT = "left";
 	const FLOAT_RIGHT = "right";
 	const FLOAT_INHERIT = "inherit";
+	
+	const POSITION_ABSOLUTE = "absolute";
+	const POSITION_RELATIVE = "relative";
+	
+	public function  getPriv(){return $this->priv; }
+	public function  setPriv($s) { $this->priv = $s;}
 	
 	public function __construct(){
 		if($this->border === null)    		$this->border = new Border();
@@ -171,6 +178,13 @@ class Widget {
 		
 		$this->widgetType = get_class($this);
 		
+		$p_num = func_num_args();
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
+		
 	}
 	
 	public function __destruct(){
@@ -179,6 +193,40 @@ class Widget {
 		if($this->font !== null)    		$this->font = null;
 		if($this->children !== null)		$this->children = null;
 		if($this->fireAction !== null)		$this->fireAction = null;
+	}
+	
+	public function getClass()			{  return get_class($this);	}
+	public function getParentClass()	{  return get_parent_class($this);	}
+	
+	public function set($key, $val){
+		$ClassName = $this->getClass();
+		$count = 0;
+		while($ClassName !== null && is_string($ClassName)){
+			$reflect = new ReflectionClass($ClassName);
+			$has_prop = $reflect->hasProperty($key);
+			if($has_prop === true){
+				$prop = $reflect->getProperty($key);
+				if($prop->isStatic())
+					$prop->setValue($val);
+				else {
+//					echo "set $key = $val<br/>";
+					$prop->setAccessible(true);
+					$prop->setValue($this, $val);
+				}
+				break;		
+			}
+			else{
+				$ClassName = $this->getParentClass();
+				$reflect = null;
+				
+				$count ++ ;
+				if($count > 20) break;
+				continue;
+			}
+			
+		}// while
+
+		return $this;
 	}
 	
 	public function addChild($c){
@@ -192,6 +240,15 @@ class Widget {
 	
 	public function removeChild($c){
 		
+	}
+	
+	public function addChildren(){
+		$p_num = func_num_args();
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
 	}
 	
 	public function addJsFile($jsf){
@@ -333,7 +390,13 @@ class Widget {
 	}
 	
 	public function formatStyle($more){
-		$ret = 'position:absolute;';
+		$ret = "";
+		
+		if($this->position !== null)
+			$ret .= 'position:' . $this->position . ";";
+		else 
+			$ret .= "position:absolute;";
+		
 		$ret .= $this->background->formatStyle();
 		$ret .= $this->border->formatStyle();
 		

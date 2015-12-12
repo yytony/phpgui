@@ -1,7 +1,7 @@
 <?php
 
 
-require_once 'Input.php';
+require_once __DIR__ . '/Input.php';
 
 class Button extends Input {
 	public $bindFormAction = null;

@@ -1,10 +1,11 @@
 <?php
 
-require_once '../phpgui.php';
+require_once __DIR__ . '/../phpgui.php';
 
 
 $page = new Page();
 $page->id = "MyPage";
+
 
 $w = new Widget();
 $w->id = "MyCom";

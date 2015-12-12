@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Input.php';
+require_once __DIR__ . '/Input.php';
 
 class CheckBox extends Input {
 	public $text = "option_1";

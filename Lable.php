@@ -1,17 +1,21 @@
 <?php
 
 
-require_once 'Widget.php';
+require_once __DIR__ . '/Widget.php';
 
 class Label extends Widget {
 	public $text = '';
 	public $href = null;
 	
-	public function __construct($t){
+	public function __construct(){
 		parent::__construct();
 		
-		if($t !== null)
-			$this->text = $t;
+		$p_num = func_num_args();
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_string($p))
+				$this->text = $p;
+		}
 	}
 	
 	public function render($depth){

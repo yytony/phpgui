@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__ . '/Widget.php';
 
 class TableHead extends  Widget {
 	
@@ -23,11 +24,15 @@ class TableHeadCell extends Widget {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->position = Widget::POSITION_RELATIVE;
 		
 		$p_num = func_num_args();
-		$p0 = func_get_arg(0);
-		if($p0 !== null)
-			$this->addChild($p0);
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
+				
 	}
 	
 	public function render($depth){
@@ -58,11 +63,17 @@ class TableHeadCell extends Widget {
 class TableDataCell extends  Widget {
 	public function __construct(){
 		parent::__construct();
+		$this->border->color = "#606060";
+		$this->border->style = Border::STYLE_SOLID;
+		$this->border->width = "1px";
+		$this->position = Widget::POSITION_RELATIVE;
 
 		$p_num = func_num_args();
-		$p0 = func_get_arg(0);
-		if($p0 !== null)
-			$this->addChild($p0);
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
 	}
 	
 	public function render($depth){
@@ -95,6 +106,14 @@ class TableRow extends Widget {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->position = Widget::POSITION_RELATIVE;
+	
+		$p_num = func_num_args();
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
 	}
 	
 	public function render($depth){
@@ -128,6 +147,14 @@ class Table extends Widget {
 	
 	public function __construct(){
 		parent::__construct();
+		$this->position = Widget::POSITION_RELATIVE;
+		
+		$p_num = func_num_args();
+		for($i = 0; $i < $p_num; $i ++){
+			$p = func_get_arg($i);
+			if($p !== null && is_object($p))
+				$this->addChild($p);
+		}
 	}
 	
 	public function render($depth){
@@ -136,9 +163,11 @@ class Table extends Widget {
 	
 		$ret .= sprintf("<table id=\"%s\" class=\"%s\" ", $this->id, $this->class);
 	
-		$ret .= sprintf("style=\"%s\" ",$this->formatStyle(null));
+		$ext_style = "" . sprintf("border-collapse:%s;", $this->borderCollapse);
+		$ext_style .= "border:1px solid #606060;padding:3px;text-align:center;";
+		
+		$ret .= sprintf("style=\"%s\" ",$this->formatStyle($ext_style));
 	
-		$ret .= sprintf("border-collapse:%s;", $this->borderCollapse);
 		$ret .= $this->formatJsListeners();
 	
 		$ret .= ">\n";

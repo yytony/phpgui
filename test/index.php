@@ -1,7 +1,7 @@
 <?php 
 
-require_once '../Config.php';
-require_once '../phpgui.php';
+require_once __DIR__ . '/../Config.php';
+require_once __DIR__ . '/../phpgui.php';
 
 //global $PHPGUI_ROOT;
 $test_root = $PHPGUI_ROOT . "/test" ;

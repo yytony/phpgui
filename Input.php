@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Widget.php';
+require_once __DIR__ . '/Widget.php';
 
 class Input extends Widget {
 	public $type = null;
