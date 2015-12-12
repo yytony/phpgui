@@ -7,7 +7,7 @@ it work like this:<br/>
 one syntax:<br/>
 <br/>
 <code>
-$page = new Page();
+$page = new Page();<br/>
 $page->id = "myPage";
 
 $page->addChildren(
@@ -43,95 +43,95 @@ Second Syntax:<br/>
 <br/>
 <br/>
 <code>
-require_once 'phpgui.php';<br/>
-<br/>
-<br/>
-$page = new Page();<br/>
-$page->id = "MyPage";<br/>
-<br/>
-$w = new Widget();<br/>
-$w->id = "MyCom";<br/>
-$w->background->color = "#ff0000";<br/>
-$w->x = 100;<br/>
-$w->y = 100;<br/>
-$w->width = 200;<br/>
-$w->height = 300;<br/>
-<br/>
-$c = new Widget();<br/>
-$c->id = "com2";<br/>
-$c->background->color = "#0000ff";<br/>
-$c->x = 150;<br/>
-$c->y = 150;<br/>
-$c->width = 200;<br/>
-$c->height = 300;<br/>
-$c->border->outSet = 1;<br/>
-$c->border->width = '3px';<br/>
-$c->border->color = '#808080';<br/>
-<br/>
-$a = new Label();<br/>
-$a->text = "hello world!";<br/>
-$a->width = 100;<br/>
-$a->height = 10;<br/>
-$a->x = 300;<br/>
-$a->font->size = 23;<br/>
-<br/>
-$b = new Button();<br/>
-$b->x = 400;<br/>
-$b->bindFormAction("myform", "/a/b/c?");<br/>
-<br/>
-<br/>
-$page->addChild($w);<br/>
-$w->addChild($c);<br/>
-$c->addChild($a);<br/>
-$c->addChild($b);<br/>
-<br/>
-<br/>
-$form = new Form("post", "Myform", "/TestGui.php");<br/>
-$form->x = 200;<br/>
-$form->y = 10;<br/>
-$form->width = 200;<br/>
-$form->height = 50;<br/>
-<br/>
-$input_text = new TextField();<br/>
-$input_text->name = "text1";<br/>
-$input_text->width = 200;<br/>
-$input_text->height = 20;<br/>
-$input_text->border->width = 1;<br/>
-$input_text->border->color = "#00ff00";<br/>
-<br/>
-$input_checkbox = new CheckBox();<br/>
-$input_checkbox->name = "checkbox1";<br/>
-$input_checkbox->x = 100;<br/>
-<br/>
-$input_checkbox_label = new Label();<br/>
-$input_checkbox_label->text = "hello";<br/>
-$input_checkbox_label->x = 115;<br/>
-<br/>
-<br/>
-$but = new Button();<br/>
-$but->name = "AllOk";<br/>
-$but->value = "That Ok";<br/>
-$but->width = 70;<br/>
-$but->y = 10;<br/>
-<br/>
-$form->addChild($input_text);<br/>
-$form->addChild($input_checkbox);<br/>
-$form->addChild($input_checkbox_label);<br/>
-$form->addChild($but);<br/>
-<br/>
-$page->addChild($form);<br/>
-<br/>
-$img = new Image();<br/>
-$img->src = "/phpgui/img/test.jpg";<br/>
-$img->x = 800;<br/>
-$img->y = 200;<br/>
-$img->width = 300;<br/>
-$img->height = 200;<br/>
-<br/>
-$page->addChild($img);<br/>
-<br/>
-<br/>
-$page->renderPage();<br/>
+require_once 'phpgui.php';
+
+
+$page = new Page();
+$page->id = "MyPage";
+
+$w = new Widget();
+$w->id = "MyCom";
+$w->background->color = "#ff0000";
+$w->x = 100;
+$w->y = 100;
+$w->width = 200;
+$w->height = 300;
+
+$c = new Widget();
+$c->id = "com2";
+$c->background->color = "#0000ff";
+$c->x = 150;
+$c->y = 150;
+$c->width = 200;
+$c->height = 300;
+$c->border->outSet = 1;
+$c->border->width = '3px';
+$c->border->color = '#808080';
+
+$a = new Label();
+$a->text = "hello world!";
+$a->width = 100;
+$a->height = 10;
+$a->x = 300;
+$a->font->size = 23;
+
+$b = new Button();
+$b->x = 400;
+$b->bindFormAction("myform", "/a/b/c?");
+
+
+$page->addChild($w);
+$w->addChild($c);
+$c->addChild($a);
+$c->addChild($b);
+
+
+$form = new Form("post", "Myform", "/TestGui.php");
+$form->x = 200;
+$form->y = 10;
+$form->width = 200;
+$form->height = 50;
+
+$input_text = new TextField();
+$input_text->name = "text1";
+$input_text->width = 200;
+$input_text->height = 20;
+$input_text->border->width = 1;
+$input_text->border->color = "#00ff00";
+
+$input_checkbox = new CheckBox();
+$input_checkbox->name = "checkbox1";
+$input_checkbox->x = 100;
+
+$input_checkbox_label = new Label();
+$input_checkbox_label->text = "hello";
+$input_checkbox_label->x = 115;
+
+
+$but = new Button();
+$but->name = "AllOk";
+$but->value = "That Ok";
+$but->width = 70;
+$but->y = 10;
+
+$form->addChild($input_text);
+$form->addChild($input_checkbox);
+$form->addChild($input_checkbox_label);
+$form->addChild($but);
+
+$page->addChild($form);
+
+$img = new Image();
+$img->src = "/phpgui/img/test.jpg";
+$img->x = 800;
+$img->y = 200;
+$img->width = 300;
+$img->height = 200;
+
+$page->addChild($img);
+
+
+$page->renderPage();
 
 </code>
 ++++++++++++++++++++++++++++++++++++++<br/>
