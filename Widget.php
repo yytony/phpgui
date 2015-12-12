@@ -170,7 +170,6 @@ class Widget extends PGObject {
 	public function  setPriv($s) { $this->priv = $s;}
 	
 	public function __construct(){
-		echo "constuct: id = $this->id<br/>";
 		parent::__construct();
 		
 		if($this->border === null)    		$this->border = new Border();

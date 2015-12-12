@@ -7,6 +7,7 @@ $page = new Page();
 
 $page->id = "myPage";
 
+/*
 $page->addChildren(
 			(new Widget(
 					(new Widget())
@@ -36,12 +37,13 @@ echo "----------------------------------<br/>";
 //var_dump($page->getChildren());
 
 //var_dump(split("\.","a.b"));
-
+*/
 /****************************************
  * 
  * 	anohter valid sytax:
  * 
  * -----------------------------------
+ */
 $w = new Widget();
 $w->id = "MyCom";
 $w->background->color = "#ff0000";
@@ -73,7 +75,6 @@ $b = new Button();
 $b->x = 400;
 $b->bindFormAction("myform", "/a/b/c?");
 
-
 $page->addChild($w);
 $w->addChild($c);
 $c->addChild($a);
@@ -96,17 +97,19 @@ $input_text->border->color = "#00ff00";
 $input_checkbox = new CheckBox();
 $input_checkbox->name = "checkbox1";
 $input_checkbox->x = 100;
+$input_checkbox->y = 50;
 
 $input_checkbox_label = new Label();
 $input_checkbox_label->text = "hello";
 $input_checkbox_label->x = 115;
+$input_checkbox_label->y = 50;
 
 
 $but = new Button();
 $but->name = "AllOk";
 $but->value = "That Ok";
 $but->width = 70;
-$but->y = 10;
+$but->y = 50;
 
 $form->addChild($input_text);
 $form->addChild($input_checkbox);
@@ -124,6 +127,6 @@ $img->height = 200;
 
 $page->addChild($img);
 
-*/
+
 $page->renderPage();
 

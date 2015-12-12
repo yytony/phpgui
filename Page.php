@@ -15,7 +15,7 @@ class Page extends Widget {
 		$this->height = '100%';
 		
 		global $PHPGUI_ROOT;
-		echo "phpgui_root: > $PHPGUI_ROOT";
+//		echo "phpgui_root: > $PHPGUI_ROOT";
 		$this->addJsFile($PHPGUI_ROOT . "/js/bootstrap.min.js");
 		$this->addJsFile($PHPGUI_ROOT . "/js/jquery.js");
 		$this->addCssFile($PHPGUI_ROOT . "/css/phpgui.css");
@@ -44,6 +44,8 @@ class Page extends Widget {
 	
 	public function renderPage(){
 		$div_str='';
+		
+		$time_start = microtime(true);
 		
 		echo "<html>\n";
 		
@@ -75,7 +77,13 @@ class Page extends Widget {
 		printf("<body sytle=\"font-family:'times sans-serif'\">\n");
 		
 //		$this->renderWidget($this, 0, $div_str);
-		$this->render(0);	
+		$this->render(0);
+
+		$time_end = microtime(true);
+		$time_delta = $time_end - $time_start;
+		
+		echo "<div style=\"position:absolute;background-color:#808080;width:100%; height:1px;top:1000px;\" />";
+		echo "render page time: $time_delta (ms)";
 		echo "</body>\n";
 		echo "</html>";
 	}
