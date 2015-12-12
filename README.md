@@ -42,6 +42,7 @@ $page->addChildren(
 Second Syntax:<br/>
 <br/>
 <br/>
+<code>
 require_once 'phpgui.php';<br/>
 <br/>
 <br/>
@@ -132,6 +133,7 @@ $page->addChild($img);<br/>
 <br/>
 $page->renderPage();<br/>
 
+</code>
 ++++++++++++++++++++++++++++++++++++++<br/>
 This is snapshot :<br/>
 <img src="https://github.com/yytony/phpgui/blob/master/img/snapshot1.png"/>
